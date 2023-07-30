@@ -1,0 +1,172 @@
+{% extends "dual/layout.html" %}
+{% load static %}
+
+
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+    
+    
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-sm-4 mx-3 px-5 my-2 my-sm-3" id="profile_details">
+      <h3 class="my-3 px-2 font-monospace text-center">Profile Details</h3>
+      
+      <table>
+        <tr>
+          <td class="fw-light">
+            Name:
+          </td>
+          <td class="fw-semibold">
+            {{ user.first_name }}
+          </td>
+        </tr>
+        <tr>
+          <td class="fw-light">
+            Surname:
+          </td>
+          <td class="fw-semibold">
+            {{ user.last_name }}
+          </td>
+        </tr>
+
+        <tr>
+          <td class="fw-light">
+            Username:
+          </td>
+          <td class="fw-semibold">
+            {{ user.username }}
+          </td>
+        </tr>
+        <tr>
+          <td class="fw-light">
+            Email:
+          </td>
+          <td class="fw-semibold">
+            {{ user.email }}
+          </td>
+        </tr>
+        
+        
+      </table>
+
+    
+      <div class="d-flex justify-content-center">
+        <button id="showEditUser" class="btn btn-dark round_custom my-3 px-2 ">Edit user</button>
+      </div>
+
+      
+
+      <div id="editUser" class="modal">
+        <div class="modal-content" id="modal-content">
+            <h3 class="my-3 px-2 font-monospace text-center">Edit user</h3>
+            <!-- Div to show alerts about editing user -->
+                <div id="alert_edit_user" style="width: 100%; margin: 10px auto 10px; display: none;">
+                  <div id="alert_edit_user_txt" class="alert alert-danger round-custom mt-3" role="alert">
+                      
+                  </div>
+                </div>
+
+
+            <form id="editUserForm">
+              {% csrf_token %}
+              
+              <div class="form-floating mb-3">
+                <input  type="text" class="form-control" name="name" placeholder="Name" value="{{ user.first_name }}">
+                <label for="username">Name</label>
+              </div> 
+
+             
+              <div class="form-floating mb-3">
+                <input  type="text" class="form-control" name="surname" placeholder="Name" value="{{ user.last_name }}">
+                <label for="username">Surname</label>
+              </div> 
+
+              <div class="form-floating mb-3">
+                <input  type="text" class="form-control" name="username" placeholder="Username" value="{{ user.username }}">
+                <label for="username">Username</label>
+              </div>               
+              
+
+              <div class="form-floating mb-3">
+                <input  type="email" class="form-control" name="email" placeholder="Email" value="{{ user.email }}">
+                <label for="username">Username</label>
+              </div>  
+              
+              
+              <div class="d-flex m-2 justify-content-center">            
+                <button type="submit" class="round_custom btn btn-dark mx-2"><i class="bi bi-sd-card me-2"></i>Save</button>
+                <button class="round_custom btn btn-dark mx-2" id="dismiss_edit_user"><i class="bi bi-x-circle me-2"></i>Dismiss</button>
+              </div>
+
+            </form>
+           
+
+
+
+           </div> 
+      </div>
+
+
+    
+    </div>
+
+
+    <div class="col-sm-6 mx-3 px-5 my-2 my-sm-3" id="profile_favs">
+
+      <h3 class="my-3 px-2 font-monospace text-center">Favorites</h3>
+      <ul id="fav_list">
+
+      
+      </ul>
+
+        
+
+
+        <div id="eventModal" class="modal">
+          <div class="modal-content" id="modal-content">
+            <div class="d-flex justify-content-between">
+                <h3 id="eventTitle"></h3>
+                <button class="close fs-3"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div id="eventDescription"></div>
+            <div id="eventImage"></div>
+
+            
+            <!-- Alert for when event is fav'd and unfav'd -->
+            <div class="text-center" style="max-width: 450px; margin: 5px auto 0;">
+                <span id="faved_alert" class="alert alert-danger round-custom" role="alert" style="display: none"></span>
+            </div>
+            
+            <div class="d-flex justify-content-center my-2 py-2">
+                <div id="eventLink"></div>
+            {% if user.is_authenticated %}
+            
+                <button id="favoriteButton" class="round_custom btn-dark btn mx-2"></button>
+                
+                {%endif%} 
+                <button class="round_custom btn btn-dark mx-2" id="dismiss_modal"><i class="bi bi-x-circle me-2"></i>Dismiss</button>
+               </div> 
+          </div>
+        </div>
+
+    </div>
+  </div>
+</div>
+    
+  
+    
+    
+
+
+    
+    
+
+
+    
+
+    
+    
+{% endblock %}
+
